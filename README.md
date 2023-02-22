@@ -36,12 +36,39 @@ This repository contains documentation for installing ROS2 on a Mango Pi running
     sudo modprobe -v 8723ds 
     ```
 
+  1. Configure your Wifi
+
+      ```bash
+      ls /sys/class/net
+      sudo nano /etc/netplan/50-cloud-init.yaml
+      ```
+
+      ```yaml
+      network:
+        ...
+        wifis:
+          <from the class/net>:
+            optional: true
+            access-points:
+                "your ssid":
+                    password: "wifi password"
+            dhcp4: true
+      ```
+
+  1. Configure docker to not require sudo (optional)
+      ```bash
+      sudo gpasswd -a $USER docker
+      ```
+
+
 
 ## ROS2 Docker Image
 ### Using Docker Directly
 This method allows you to use the demo applications to validate your install; however deriving your own container from the released version is recommended.
 
-
+```bash
+docker run --network host -i -t polyhobbyist/ros:humble /bin/bash
+```
 
 ### Using as the root for your own container
 
@@ -51,17 +78,19 @@ Create a dockerfile for your image (example below):
 FROM polyhobbyist/ros:humble
 
 RUN apt-get update && \
-	libopencv-dev \
-	python3-opencv \
-        libboost-all-dev \
-        openssl \
-        git \
-        gdb \
-	i2c-tools \
-        libcurl4-openssl-dev \
-        libssl-dev \
-        curl \
-        libi2c-dev
+  apt install \
+  libopencv-dev \
+  python3-opencv \
+  python-is-python3 \
+  libboost-all-dev \
+  openssl \
+  git \
+  gdb \
+  i2c-tools \
+  libcurl4-openssl-dev \
+  libssl-dev \
+  curl \
+  libi2c-dev
 
 
 ENTRYPOINT ["./ros_entrypoint.sh"]
