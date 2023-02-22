@@ -106,7 +106,7 @@ docker exec -ti <ros container> /bin/bash
 
 
 ## Resources
-[Awesome MangoPi](https://github.com/boosterl/awesome-mango-pi-mq-pro)
-[MangoPi SBC Repo](https://github.com/mangopi-sbc)
+- [Awesome MangoPi](https://github.com/boosterl/awesome-mango-pi-mq-pro)
+- [MangoPi SBC Repo](https://github.com/mangopi-sbc)
 
 
